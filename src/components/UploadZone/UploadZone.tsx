@@ -1,0 +1,214 @@
+import React, { useState, useEffect, useRef, useCallback, forwardRef } from "react";
+import { createRoot, Root } from "react-dom/client";
+import clsx from "clsx";
+import { UploadZoneInput } from "./components/UploadZoneInput";
+import { UploadZoneContext } from "./UploadZoneContext";
+import { UploadZoneOnChangeType } from "./types";
+import styles from "./styles/UploadZone.module.less";
+
+export interface IUploadZoneChildrenProvideProps {
+    /** Открытие диалогового окна выбора файла(ов). */
+    openUploadDialog: () => void;
+}
+
+/** Свойства компонента UploadZone. */
+interface IUploadZoneProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "children"> {
+    /** В качестве чилда передаётся функция. */
+    children: (props: IUploadZoneChildrenProvideProps) => React.ReactNode;
+    /** Обработчик изменения значения. */
+    onChange: UploadZoneOnChangeType;
+    /** Контейнер для дроп-зоны. */
+    dropZoneContainer?: HTMLElement | null;
+    /** Рендер-функция контента над контейнером. */
+    renderContainerContent?: () => JSX.Element;
+}
+
+export const UploadZone = Object.assign(
+    forwardRef<HTMLDivElement, IUploadZoneProps>((props, ref) => {
+        const {
+            dropZoneContainer,
+            children,
+            className,
+            onChange,
+            renderContainerContent,
+            onDrop,
+            onDragOver,
+            ...restHtmlAttributes
+        } = props;
+
+        const [hoverOnDrag, setHoverOnDrag] = useState(false);
+        const [inputNode, setInputNode] = useState<HTMLInputElement | undefined>(undefined);
+
+        // Описание - https://stackoverflow.com/questions/7110353/html5-dragleave-fired-when-hovering-a-child-element.
+        // Если counter > 0 - означает, что перетаскиваемый объект в пределах окна браузера.
+        /** Каунтер для подсчёта drag-перемещений по странице. */
+        const counterRef = useRef(0);
+
+        /** Элемент-обёртка для дроп-зоны. */
+        const dropZoneWrapperDivRef = useRef<HTMLDivElement | null>(null);
+        /** Root для контента, отрисованного поверх контейнера. */
+        const dropZoneRootRef = useRef<Root | null>(null);
+
+        const handleDragEnter = useCallback(() => {
+            counterRef.current += 1;
+            if (counterRef.current === 1) {
+                setHoverOnDrag(true);
+            }
+        }, []);
+
+        const handleDragLeave = useCallback(() => {
+            counterRef.current -= 1;
+            if (counterRef.current === 0) {
+                setHoverOnDrag(false);
+            }
+        }, []);
+
+        const addListeners = useCallback(
+            (dropZoneContainer: HTMLElement | null | undefined) => {
+                if (!dropZoneContainer) {
+                    return;
+                }
+
+                dropZoneContainer.addEventListener("dragenter", handleDragEnter);
+                dropZoneContainer.addEventListener("dragleave", handleDragLeave);
+            },
+            [handleDragEnter, handleDragLeave],
+        );
+
+        const removeListeners = useCallback(
+            (dropZoneContainer: HTMLElement | null | undefined) => {
+                if (!dropZoneContainer) {
+                    return;
+                }
+
+                dropZoneContainer.removeEventListener("dragenter", handleDragEnter);
+                dropZoneContainer.removeEventListener("dragleave", handleDragLeave);
+            },
+            [handleDragEnter, handleDragLeave],
+        );
+
+        const handlePreventDefault = useCallback(
+            (e: React.DragEvent<HTMLDivElement>) => {
+                e.preventDefault();
+                onDragOver?.(e);
+            },
+            [onDragOver],
+        );
+
+        const fileDrop = useCallback(
+            (e: React.DragEvent<HTMLDivElement>) => {
+                e.preventDefault();
+                onDrop?.(e);
+
+                onChange(e.dataTransfer.files, e);
+                setHoverOnDrag(false);
+                counterRef.current = 0;
+            },
+            [onChange, onDrop],
+        );
+
+        const createDropZoneDiv = useCallback((): HTMLDivElement => {
+            const wrapperDiv = document.createElement("div");
+
+            dropZoneRootRef.current = createRoot(wrapperDiv);
+            dropZoneRootRef.current.render(
+                <div
+                    className={clsx(styles.uploadZoneContainerDragArea, className)}
+                    onDragOver={handlePreventDefault}
+                    onDrop={fileDrop}
+                    {...restHtmlAttributes}
+                    key="uploadZoneDragArea"
+                    role="none"
+                >
+                    {renderContainerContent?.()}
+                </div>,
+            );
+
+            return wrapperDiv;
+        }, [className, handlePreventDefault, fileDrop, renderContainerContent, restHtmlAttributes]);
+
+        const cleanupDropZone = useCallback(() => {
+            if (dropZoneRootRef.current) {
+                dropZoneRootRef.current.unmount();
+                dropZoneRootRef.current = null;
+            }
+
+            const dropZoneWrapperDiv = dropZoneWrapperDivRef.current;
+            if (dropZoneWrapperDiv?.parentNode) {
+                dropZoneWrapperDiv.parentNode.removeChild(dropZoneWrapperDiv);
+            }
+
+            dropZoneWrapperDivRef.current = null;
+        }, []);
+
+        useEffect(() => {
+            addListeners(dropZoneContainer);
+            return () => {
+                removeListeners(dropZoneContainer);
+            };
+        }, [dropZoneContainer, addListeners, removeListeners]);
+
+        useEffect(() => {
+            if (!dropZoneContainer) {
+                return;
+            }
+
+            if (hoverOnDrag) {
+                const isDropZoneMounted =
+                    dropZoneWrapperDivRef.current && dropZoneContainer.contains(dropZoneWrapperDivRef.current);
+
+                if (!isDropZoneMounted) {
+                    cleanupDropZone();
+                    dropZoneWrapperDivRef.current = createDropZoneDiv();
+                    dropZoneContainer.appendChild(dropZoneWrapperDivRef.current);
+                }
+            } else {
+                cleanupDropZone();
+            }
+        }, [hoverOnDrag, dropZoneContainer, createDropZoneDiv, cleanupDropZone]);
+
+        useEffect(
+            () => () => {
+                cleanupDropZone();
+                counterRef.current = 0;
+            },
+            [cleanupDropZone],
+        );
+
+        const openUploadDialog = () => {
+            inputNode?.click();
+        };
+
+        const handleAreaClick = (e: React.SyntheticEvent) => {
+            e.stopPropagation();
+            openUploadDialog();
+        };
+
+        return (
+            <UploadZoneContext.Provider
+                value={{
+                    inputNode,
+                    onChange,
+                    openUploadDialog,
+                    setInputNode,
+                }}
+            >
+                <div className={styles.uploadZone} data-tx={process.env.npm_package_version} ref={ref}>
+                    <div
+                        className={clsx(styles.uploadZoneDragArea, className)}
+                        onClick={handleAreaClick}
+                        {...restHtmlAttributes}
+                        key="uploadZoneDragArea"
+                        role="none"
+                    />
+                    {children({ openUploadDialog })}
+                </div>
+            </UploadZoneContext.Provider>
+        );
+    }),
+    {
+        Input: UploadZoneInput,
+    },
+);
+
+UploadZone.displayName = "UploadZone";

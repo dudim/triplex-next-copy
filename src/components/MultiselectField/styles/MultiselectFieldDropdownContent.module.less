@@ -1,0 +1,25 @@
+.multiselectFieldContentWrapper {
+    .multiselectFieldContent {
+        position: relative;
+        padding-bottom: 12px;
+        box-sizing: border-box;
+        overflow-y: auto;
+        outline: none;
+
+        &:has(.loaderScreen) {
+            overflow: hidden;
+        }
+
+        &.sm {
+            max-height: 208px;
+        }
+
+        &.md {
+            max-height: 266px;
+        }
+
+        &.lg {
+            max-height: 296px;
+        }
+    }
+}

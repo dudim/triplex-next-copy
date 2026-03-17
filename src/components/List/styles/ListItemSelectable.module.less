@@ -1,0 +1,34 @@
+.listItemSelectable {
+    display: flex;
+    align-items: center;
+    background: var(--triplex-next-ListItem-Background);
+    border-radius: 8px;
+
+    &.selected {
+        background: var(--triplex-next-ListItem-Background_Selected);
+    }
+}
+
+.checkboxWrapper {
+    padding: 16px;
+    line-height: 0;
+}
+
+.childrenWrapper {
+    flex-grow: 1;
+}
+
+.checkboxLabel {
+    // Переопределение padding для .noempty чекбокса.
+    padding: 0 !important;
+    position: relative;
+}
+
+// Увеличение области клика на чекбокс.
+.checkboxLabelClickArea {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    bottom: -4px;
+    right: -4px;
+}

@@ -1,0 +1,69 @@
+.container {
+    padding: 20px;
+    font-family:
+        "Nunito Sans",
+        -apple-system,
+        ".SFNSText-Regular",
+        "San Francisco",
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Helvetica Neue",
+        Helvetica,
+        Arial,
+        sans-serif;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.tab {
+    padding: 10px 16px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    font-size: 14px;
+    color: inherit;
+}
+
+.tokenList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.token {
+    display: flex;
+    padding-bottom: 10px;
+    font-size: 14px;
+}
+
+.tokenName {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 10%;
+}
+
+.tokenColor {
+    width: 100px;
+    height: 80px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.tokenValue {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 25%;
+    margin-left: 20px;
+}
+
+.variable {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,59 @@
+.formFieldMaskedInputWrapper {
+    position: relative;
+
+    .formFieldMaskedInputPlaceholder {
+        position: absolute;
+        left: 0;
+        top: 0;
+
+        &::placeholder {
+            // Переопределяет opacity: 0 в FormFieldInput.less.
+            opacity: 1;
+        }
+
+        // Скрываем маску в состоянии disabled, иначе получается темный шрифт value т.к. он с альфа-каналом.
+        &:disabled {
+            visibility: hidden;
+        }
+    }
+
+
+    &.size-sm {
+        font-size: 12px;
+        line-height: 16px;
+
+        .formFieldMaskedInputPlaceholder {
+            top: 6px;
+            font-size: 12px;
+            line-height: 16px;
+        }
+    }
+
+    &.size-md {
+        font-size: 14px;
+        line-height: 20px;
+
+        .formFieldMaskedInputPlaceholder {
+            top: 10px;
+            font-size: 14px;
+            line-height: 20px;
+        }
+    }
+
+    &.size-lg {
+        font-size: 16px;
+        line-height: 20px;
+
+        .formFieldMaskedInputPlaceholder {
+            top: 26px;
+            font-size: 16px;
+            line-height: 20px;
+        }
+    }
+
+    .formFieldMaskedInput {
+        display: block;
+        position: relative;
+        background: none !important;
+    }
+}

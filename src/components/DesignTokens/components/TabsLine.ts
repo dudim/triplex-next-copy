@@ -1,0 +1,30 @@
+import {
+    TDesignTokenValue,
+    TDesignTokenValues,
+} from "@sberbusiness/triplex-next/components/DesignTokens/types/DesignTokenTypes";
+
+// Название токенов компонента TabsLine.
+export const designTokensComponentsTabsLineKeys = [
+    "BorderColor_Active",
+    "BorderColor_Hover",
+
+    "Separator_Color",
+    "Shadow_Focus",
+] as const;
+// Тип, содержащий названия токенов компонента TabsLine.
+export type TDesignTokensComponentsTabsLineKeys = (typeof designTokensComponentsTabsLineKeys)[number];
+// Тип, содержащий названия токенов компонента TabsLine и их значения.
+export type TDesignTokensComponentsTabsLineValue = Record<TDesignTokensComponentsTabsLineKeys, TDesignTokenValue>;
+// Тип, содержащий названия токенов компонента TabsLine и их значения в светлой и темной теме.
+export type TDesignTokensComponentsTabsLineValues = Record<TDesignTokensComponentsTabsLineKeys, TDesignTokenValues>;
+// Тип локальных токенов компонента TabsLine.
+export type TDesignTokensComponentsTabsLine = { TabsLine: TDesignTokensComponentsTabsLineValue };
+
+// Токены компонента TabsLine в светлой и темной темах.
+export const TabsLine_Tokens: TDesignTokensComponentsTabsLineValues = {
+    BorderColor_Active: [{ ref: "ColorBrand.50" }, { ref: "ColorBrand.50" }], // var(--triplex-next-TabsLine-BorderColor_Active)
+    BorderColor_Hover: [{ ref: "ColorBrand.60" }, { ref: "ColorBrand.60" }], // var(--triplex-next-TabsLine-BorderColor_Hover)
+
+    Separator_Color: [{ ref: "ColorNeutral.20" }, { ref: "ColorDarkNeutral.80" }], // var(--triplex-next-TabsLine-Separator_Color)
+    Shadow_Focus: [{ value: "0 0 0 1px #FFDD64 inset" }, { value: "0 0 0 1px #FFDD64 inset" }], // var(--triplex-TabsLine-Shadow_Focus)
+};

@@ -1,0 +1,167 @@
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import { describe, it, expect } from "vitest";
+import { Button } from "@sberbusiness/triplex-next/components/";
+import { EButtonTheme } from "../enums";
+import { EComponentSize } from "@sberbusiness/triplex-next/enums/EComponentSize";
+
+const getButton = () => screen.getByTestId("button");
+
+describe("Button", () => {
+    it("Should render with default props", () => {
+        render(
+            <Button theme={EButtonTheme.GENERAL} size={EComponentSize.MD} data-testid="button">
+                Click me
+            </Button>,
+        );
+        const button = getButton();
+        expect(button).toBeInTheDocument();
+        expect(button).toHaveClass("button");
+        expect(button).toHaveClass("general");
+        expect(button).toHaveClass("md");
+    });
+
+    it("Should apply size classes", () => {
+        const { rerender } = render(
+            <Button theme={EButtonTheme.GENERAL} size={EComponentSize.SM} data-testid="button">
+                Small
+            </Button>,
+        );
+        const button = getButton();
+        expect(button).toHaveClass("sm");
+
+        rerender(
+            <Button theme={EButtonTheme.GENERAL} size={EComponentSize.LG} data-testid="button">
+                Large
+            </Button>,
+        );
+        expect(button).toHaveClass("lg");
+    });
+
+    it("Should apply theme classes", () => {
+        const { rerender } = render(
+            <Button theme={EButtonTheme.GENERAL} size={EComponentSize.MD} data-testid="button">
+                General
+            </Button>,
+        );
+        const button = getButton();
+        expect(button).toHaveClass("general");
+
+        rerender(
+            <Button theme={EButtonTheme.SECONDARY} size={EComponentSize.MD} data-testid="button">
+                Secondary
+            </Button>,
+        );
+        expect(button).toHaveClass("secondary");
+
+        rerender(
+            <Button theme={EButtonTheme.DANGER} size={EComponentSize.MD} data-testid="button">
+                Danger
+            </Button>,
+        );
+        expect(button).toHaveClass("danger");
+
+        rerender(
+            <Button theme={EButtonTheme.LINK} size={EComponentSize.MD} data-testid="button">
+                Link
+            </Button>,
+        );
+        expect(button).toHaveClass("link");
+    });
+
+    it("Should merge custom className and passes through attributes", () => {
+        render(
+            <Button theme={EButtonTheme.GENERAL} size={EComponentSize.MD} className="custom-class" data-testid="button">
+                Button text
+            </Button>,
+        );
+        const button = getButton();
+        expect(button).toHaveClass("custom-class");
+    });
+
+    it("Should apply block and loading classes and sets tabIndex when loading", () => {
+        render(
+            <Button theme={EButtonTheme.GENERAL} size={EComponentSize.MD} block loading data-testid="button">
+                Loading
+            </Button>,
+        );
+        const button = getButton();
+        expect(button).toHaveClass("block");
+        expect(button).toHaveClass("loading");
+        expect(button).toHaveAttribute("tabindex", "-1");
+        expect(button.querySelector("span[class*='loaderSmall']")).toBeInTheDocument();
+    });
+
+    it("Should apply disabled attribute and class", () => {
+        render(
+            <Button theme={EButtonTheme.GENERAL} size={EComponentSize.MD} disabled data-testid="button">
+                Disabled
+            </Button>,
+        );
+        const button = getButton();
+        expect(button).toBeDisabled();
+        expect(button).toHaveClass("disabled");
+    });
+
+    it("Should render icon alongside children and apply icon class when only icon is provided", () => {
+        const { rerender } = render(
+            <Button
+                theme={EButtonTheme.GENERAL}
+                size={EComponentSize.MD}
+                icon={<span data-testid="icon-only" />}
+                data-testid="button"
+            />,
+        );
+        const button = getButton();
+        expect(button).toHaveClass("icon");
+        expect(screen.getByTestId("icon-only")).toBeInTheDocument();
+
+        rerender(
+            <Button
+                theme={EButtonTheme.GENERAL}
+                size={EComponentSize.MD}
+                icon={<span data-testid="icon-with-text" />}
+                data-testid="button"
+            >
+                Button text
+            </Button>,
+        );
+        expect(button).not.toHaveClass("icon");
+        expect(screen.getByTestId("icon-with-text")).toBeInTheDocument();
+        expect(button).toHaveTextContent("Button text");
+    });
+
+    it("Should add expanded and active classes when aria-expanded is true", () => {
+        render(
+            <Button theme={EButtonTheme.GENERAL} size={EComponentSize.MD} aria-expanded data-testid="button">
+                Expandable
+            </Button>,
+        );
+        const button = getButton();
+        expect(button).toHaveClass("expanded");
+        expect(button).toHaveClass("active");
+    });
+
+    it("Should render loading dots with correct theme and size", () => {
+        render(
+            <Button theme={EButtonTheme.SECONDARY} size={EComponentSize.LG} loading data-testid="button">
+                Loading
+            </Button>,
+        );
+        const button = getButton();
+        const loader = button.querySelector("span[class*='loaderSmall']");
+        expect(loader).toBeInTheDocument();
+        expect(loader).toHaveClass("lg");
+        expect(loader).toHaveClass("brand");
+    });
+
+    it("Should forward ref correctly", () => {
+        const ref = React.createRef<HTMLButtonElement>();
+        render(
+            <Button theme={EButtonTheme.GENERAL} size={EComponentSize.MD} ref={ref} data-testid="button">
+                Ref test
+            </Button>,
+        );
+        expect(ref.current).toBeInstanceOf(HTMLButtonElement);
+    });
+});

@@ -1,0 +1,30 @@
+.selectExtendedFieldTarget {
+    position: relative;
+    box-sizing: border-box;
+    align-items: center;
+    outline: none;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+
+    .caretWrapper {
+        height: 100%;
+    }
+
+    .caretIcon {
+        transition: transform 0.3s ease;
+        transform: rotate(0);
+    }
+
+    &.selectOpened {
+        .caretIcon {
+            transform: rotate(180deg);
+        }
+    }
+
+    &.disabled {
+        user-select: none;
+        pointer-events: none;
+    }
+}
+

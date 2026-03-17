@@ -1,0 +1,22 @@
+@import '../../../styles/style';
+
+.loaderScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: @z-index-loader-screen;
+
+    &.loaderSmallBackdrop {
+        background: var(--triplex-next-LoaderScreen-Small_Backdrop_Default);
+    }
+
+    &.loaderMiddleBackdrop {
+        background: var(--triplex-next-LoaderScreen-Middle_Backdrop_Default);
+    }
+}

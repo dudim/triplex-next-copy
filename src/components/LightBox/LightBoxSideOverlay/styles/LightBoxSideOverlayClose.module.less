@@ -1,0 +1,51 @@
+@import 'src/styles/style';
+
+.lightBoxSideOverlayCloseDesktopContainer {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.lightBoxSideOverlayCloseDesktop {
+    position: sticky;
+    top: 24px;
+    pointer-events: auto;
+}
+
+.lightBoxSideOverlayCloseMobile {
+    position: absolute;
+    top: 22px;
+    right: 22px;
+    margin: 0 !important;
+}
+
+/** Breakpoint для экранов менее 1024px. */
+.global-LB-less-or-equal-media-point-0 {
+    .lightBoxSideOverlayCloseDesktopContainer {
+        display: none;
+    }
+
+    .lightBoxSideOverlayCloseMobile {
+        display: block;
+    }
+
+    @media (max-width: @screen-sm-max) {
+        .lightBoxSideOverlayCloseMobile {
+            top: 12px;
+            right: 12px;
+        }
+    }
+}
+
+/** Breakpoint для экранов шире 1024px. */
+.global-LB-more-media-point-0 {
+    .lightBoxSideOverlayCloseDesktopContainer {
+        display: block;
+    }
+    
+    .lightBoxSideOverlayCloseMobile {
+        display: none;
+    }
+}

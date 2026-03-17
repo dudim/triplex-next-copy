@@ -1,0 +1,81 @@
+name: Release, publish npm package & deploy Storybook
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write   # нужно для загрузки ассетов в релиз
+
+env:
+  STORYBOOK_PREVIEW_BASE: "/var/www/storybook/data"
+  STORYBOOK_URL_BASE: "https://storybook.triplex-dev.ru"
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: 'https://registry.npmjs.org/'
+          scope: '@sberbusiness'
+          always-auth: true
+
+      - run: npm ci
+      - run: npm run build
+
+      # Публикация
+      - name: Publish to npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: |
+          echo "@sberbusiness:registry=https://registry.npmjs.org/" > .npmrc
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
+          cd dist
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if [ "${PKG_VERSION}" != "${GITHUB_REF_NAME}" ]; then
+            echo "❌ dist/package.json version (${PKG_VERSION}) != release tag (${GITHUB_REF_NAME})"
+            exit 1
+          fi
+          if [[ "${GITHUB_REF_NAME}" == 1.* ]]; then
+            echo "Publishing React 18 as latest"
+            npm publish --access public --tag latest
+          elif [[ "${GITHUB_REF_NAME}" == 0.* ]]; then
+            echo "Publishing React 17 as react17"
+            npm publish --access public --tag react17
+          else
+            echo "❌ Unknown version prefix: ${GITHUB_REF_NAME}. Expected 0.* (react17) or 1.* (latest)."
+            exit 1
+          fi
+
+      # Упаковать dist.zip как release asset
+      - name: Create dist.zip
+        run: zip -r "dist-${{ github.event.release.tag_name }}.zip" dist
+
+      - name: Upload build artifacts to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist-${{ github.event.release.tag_name }}.zip
+
+      # ---- Сборка и деплой Storybook ----
+      - name: Build Storybook
+        run: npm run storybook:build
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.STORYBOOK_SSH_PRIVATE_KEY }}
+
+      - name: Deploy Storybook to server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.STORYBOOK_SSH_USER }} "mkdir -p $STORYBOOK_PREVIEW_BASE/releases/${{ github.event.release.tag_name }}"
+          rsync -avz --delete storybook-static/ ${{ secrets.STORYBOOK_SSH_USER }}:$STORYBOOK_PREVIEW_BASE/releases/${{ github.event.release.tag_name }}/
+
+      - name: Output Storybook URL
+        run: echo "Storybook deployed ${{ env.STORYBOOK_URL_BASE }}/releases/${{ github.event.release.tag_name }}"

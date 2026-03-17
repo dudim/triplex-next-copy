@@ -1,0 +1,107 @@
+body {
+    font-family: 'SBSansText';
+}
+
+.icon-item {
+    padding: 0;
+    border: none;
+}
+
+.icon-item > svg {
+    display: block;
+}
+
+.icon-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(128px, 1fr));
+    gap: 16px;
+}
+
+.icon-display {
+    overflow: hidden;
+    border: 1px solid grey;
+    border-radius: 8px;
+}
+
+.icon-display-target {
+    width: 100%;
+    min-height: 128px;
+    min-width: 128px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.icon-display-name {
+    width: 100%;
+    font-size: 12px;
+    text-align: center;
+    word-break: break-word;
+}
+
+.theme-light > body {
+    color: rgb(24, 24, 25);
+    background-color: rgb(255, 255, 255);
+}
+
+.theme-dark > body {
+    color: rgb(201, 205, 207);
+    background-color: rgb(38, 38, 41);
+}
+
+.theme-dark .sbdocs-wrapper,
+.theme-dark .sbdocs-content,
+.theme-dark .docs-story {
+    background-color: rgb(38, 38, 41) !important;
+}
+
+.theme-light .icon-item,
+.theme-dark .icon-item.inverted {
+    color: #000000;
+    background-color: #E8E8E8;
+}
+
+.theme-dark .icon-item,
+.theme-light .icon-item.inverted {
+    color: #E8E8E8;
+    background-color: #000000;
+}
+
+@font-face {
+    font-family: 'SBSansText';
+    src: url('/assets/fonts/SBSansText-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SBSansTextSemibold';
+    src: url('/assets/fonts/SBSansText-Semibold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SBSansDisplayBold';
+    src: url('/assets/fonts/SBSansDisplay-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SBSansDisplayMedium';
+    src: url('/assets/fonts/SBSansDisplay-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SBSansDisplay';
+    src: url('/assets/fonts/SBSansDisplay-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'SBSansDisplaySemibold';
+    src: url('/assets/fonts/SBSansDisplay-SemiBold.woff2') format('woff2');
+    font-weight: 600;
+    font-style: normal;
+}

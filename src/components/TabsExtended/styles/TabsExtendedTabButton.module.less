@@ -1,0 +1,123 @@
+.tabsExtendedTabButton {
+    font-family: inherit;
+    margin: 0;
+    flex-shrink: 0;
+    border: 1px solid var(--triplex-next-Tabs-Tab_BorderColor_Default);
+
+    outline: none;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    overflow: visible;
+
+    & .tabButtonText {
+        font-weight: 400;
+    }
+
+    .notificationIcon {
+        position: absolute;
+    }
+
+    &.lg {
+        border-radius: 6px;
+        padding: 9px 16px;
+
+        & .tabButtonText {
+            font-size: 16px;
+            line-height: 20px;
+        }
+
+        .notificationIcon {
+            right: 6px;
+            top: 6px;
+        }
+    }
+
+    &.md {
+        border-radius: 4px;
+        padding: 5px 16px;
+
+        & .tabButtonText {
+            font-size: 14px;
+            line-height: 20px;
+        }
+
+        .notificationIcon {
+            right: 4px;
+            top: 4px;
+        }
+    }
+
+    &.sm {
+        border-radius: 4px;
+        padding: 1px 16px;
+
+        & .tabButtonText {
+            font-size: 12px;
+            line-height: 16px;
+        }
+
+        .notificationIcon {
+            right: 3px;
+            top: 3px;
+        }
+    }
+
+    &::-moz-focus-inner {
+        border: none;
+    }
+
+    & + .tabsExtendedTabButton {
+        margin-left: 2px;
+    }
+
+    &:focus-visible {
+        border-color: var(--triplex-next-Tabs-Tab_BorderColor_Focus);
+    }
+
+    &.type1 {
+        background: var(--triplex-next-Tabs-Type1_Tab_Background_Default);
+
+        &.selected {
+            background: var(--triplex-next-Tabs-Type1_Tab_Background_Selected);
+
+            & .tabButtonText {
+                color: var(--triplex-next-Tabs-Type1_Tab_Color_Selected);
+            }
+        }
+
+        &:hover {
+            background: var(--triplex-next-Tabs-Type1_Tab_Background_Hover);
+
+            & .tabButtonText {
+                color: var(--triplex-next-Tabs-Type1_Tab_Color_Hover);
+            }
+        }
+
+        .tabButtonText {
+            color: var(--triplex-next-Tabs-Type1_Tab_Color_Default);
+        }
+    }
+
+    &.type2 {
+        background: var(--triplex-next-Tabs-Type2_Tab_Background_Default);
+        color: var(--triplex-next-Tabs-Type2_Tab_Color_Default);
+
+        &.selected {
+            background: var(--triplex-next-Tabs-Type2_Tab_Background_Selected);
+
+            & .tabButtonText {
+                color: var(--triplex-next-Tabs-Type2_Tab_Color_Selected);
+            }
+        }
+
+        &:hover {
+            background: var(--triplex-next-Tabs-Type2_Tab_Background_Hover);
+
+            & .tabButtonText {
+                color: var(--triplex-next-Tabs-Type2_Tab_Color_Hover);
+            }
+        }
+    }
+}
+

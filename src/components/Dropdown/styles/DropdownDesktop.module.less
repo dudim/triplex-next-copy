@@ -1,0 +1,25 @@
+@import '../../../styles/style';
+
+.dropdownDesktop {
+    position: fixed;
+    z-index: @z-index-dropdown;
+    box-sizing: border-box;
+    box-shadow: var(--triplex-next-Dropdown-Shadow);
+    background-color: var(--triplex-next-Dropdown-Background);
+
+    &.sm {
+        border-radius: 6px;
+    }
+
+    &.md {
+        border-radius: 8px;
+    }
+
+    &.lg {
+        border-radius: 10px;
+    }
+}
+
+.dropdownDesktopOverflowHidden {
+    overflow: hidden;
+}

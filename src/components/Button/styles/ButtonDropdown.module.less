@@ -1,0 +1,28 @@
+.buttonDropdown {
+    &.block {
+        display: block;
+    }
+
+    & + .button,
+    & + .buttonDropdown {
+        &:not(.block) {
+            margin-left: 16px;
+        }
+    }
+
+    .buttonDropdownTarget {
+        .caretIcon {
+            margin-left: 2px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        &.active .caretIcon {
+            transform: rotate(-180deg);
+        }
+    }
+
+    .buttonDropdownMenuItem {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

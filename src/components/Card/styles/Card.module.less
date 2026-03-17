@@ -1,0 +1,51 @@
+@import 'src/styles/style';
+
+.card {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: var(--radius);
+
+    &.roundingMD {
+        --radius: 16px;
+    }
+
+    &.roundingSM {
+        --radius: 8px;
+    }
+
+    &.general {
+        background: var(--triplex-next-Card-Static_General_Background);
+    }
+
+    &.secondary {
+        background: var(--triplex-next-Card-Static_Secondary_Background);
+    }
+
+    .cardMedia {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .cardContent {
+        padding: var(--padding);
+
+        &.paddingMD {
+            --padding: 24px;
+        }
+
+        &.paddingSM {
+            --padding: 16px;
+        }
+
+        .cardContentHeader {
+            margin-bottom: 16px;
+        }
+
+        .cardContentFooter {
+            margin-top: 16px;
+        }
+    }
+}

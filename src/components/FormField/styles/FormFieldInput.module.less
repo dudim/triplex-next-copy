@@ -1,0 +1,78 @@
+.formFieldInput {
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+    border: none;
+    background: none;
+    appearance: none;
+    color: var(--triplex-next-FormField-Input_Color_Default);
+
+    &:disabled {
+        color: var(--triplex-next-FormField-Input_Color_Disabled);
+    }
+
+    &::placeholder {
+        color: var(--triplex-next-FormField-Placeholder_Color);
+        opacity: 0;
+        transition: opacity .3s ease-out;
+    }
+
+    &:focus {
+        outline: none;
+
+        &::placeholder {
+            opacity: 1;
+        }
+    }
+
+    // Создаём хук для отслеживания применения автозаполнения.
+    &:-webkit-autofill {
+        animation-name: autofill-applied-hook;
+        animation-duration: 1ms;
+        // https://stackoverflow.com/questions/2781549/
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    // Создаём хук для отслеживания отмены автозаполнения.
+    &:not(:-webkit-autofill) {
+        animation-name: autofill-cancelled-hook;
+        animation-duration: 1ms;
+    }
+
+    &.sm {
+        padding-top: 6px;
+        padding-bottom: 6px;
+        font-size: 12px;
+        height: 28px;
+        line-height: 16px;
+    }
+
+    &.md {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 14px;
+        height: 40px;
+        line-height: 20px;
+    }
+
+    &.lg {
+        padding-top: 26px;
+        padding-bottom: 10px;
+        height: 56px;
+        line-height: 20px;
+        font-size: 16px;
+    }
+}
+
+@keyframes autofill-applied-hook {
+    0% {
+        transform: none;
+    }
+}
+
+@keyframes autofill-cancelled-hook {
+    0% {
+        transform: none;
+    }
+}

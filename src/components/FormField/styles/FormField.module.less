@@ -1,0 +1,70 @@
+@import '../../../styles/transitions';
+
+.formField {
+    position: relative;
+    flex-grow: 1;
+
+    &.default {
+        background: var(--triplex-next-FormField-Background_Default);
+        box-shadow: var(--triplex-next-FormField-Shadow_Default);
+    }
+
+    // Применяем плавные переходы
+    .smooth-transition();
+
+    &:hover {
+        background: var(--triplex-next-FormField-Background_Hover);
+    }
+
+    &.disabled {
+        background: var(--triplex-next-FormField-Background_Disabled);
+    }
+
+    &.active {
+        background: var(--triplex-next-FormField-Background_Active);
+        box-shadow: var(--triplex-next-FormField-Shadow_Active);
+
+        &::placeholder {
+            opacity: 1;
+        }
+    }
+
+    &.error {
+        background: var(--triplex-next-FormField-Background_Error);
+
+        &:hover {
+            background: var(--triplex-next-FormField-Background_Error_Hover);
+        }
+
+        &.active {
+            background: var(--triplex-next-FormField-Background_Error);
+            box-shadow: var(--triplex-next-FormField-Shadow_Error_Active);
+        }
+    }
+
+    &.warning {
+        background: var(--triplex-next-FormField-Background_Warning);
+
+        &:hover {
+            background: var(--triplex-next-FormField-Background_Warning_Hover);
+        }
+
+        &.active {
+            background: var(--triplex-next-FormField-Background_Warning);
+            box-shadow: var(--triplex-next-FormField-Shadow_Warning_Active);
+        }
+    }
+
+    &.sm {
+        border-radius: 6px;
+    }
+
+    &.md {
+        border-radius: 8px;
+
+    }
+
+    &.lg {
+        border-radius: 10px;
+    }
+}
