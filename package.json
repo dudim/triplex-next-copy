@@ -6,7 +6,7 @@
     "license": "Sber Public License at-nc-sa v.2",
     "repository": {
         "type": "git",
-        "url": "git@github.com:SberBusiness/triplex-next.git"
+        "url": "git@github.com:dudim/triplex-next-copy.git"
     },
     "type": "module",
     "files": [
