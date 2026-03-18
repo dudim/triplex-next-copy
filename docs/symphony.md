@@ -61,7 +61,7 @@ This repository now includes a starter `Symphony` contract for Linear-driven age
    - For VPS or remote execution, switch `SYMPHONY_SOURCE_REPO_URL` to the GitHub repository URL, for example `git@github.com:dudim/triplex-next-copy.git`.
    - Optional:
       - `SYMPHONY_CODEX_COMMAND`
-   - If you use `.env.symphony`, variables must be exported so child processes can see them.
+   - Troubleshooting: if Symphony does not see `SYMPHONY_SOURCE_REPO_URL` or `SYMPHONY_WORKSPACE_ROOT`, check that variables from `.env.symphony` are exported so child processes can see them.
    - If you source `.env.symphony` in `zsh` or `bash`, either:
      - prefix each line with `export`; or
      - run `set -a; source .env.symphony; set +a`
