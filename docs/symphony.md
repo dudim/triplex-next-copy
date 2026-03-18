@@ -13,12 +13,12 @@ This repository now includes a starter `Symphony` contract for Linear-driven age
    - `npm run build`
    - `npm run deps:cycles` when dependency graphs or exports change
 3. Auto-merge is opt-in by PR label and still respects GitHub branch protection.
-4. The default Codex profile is cost-conservative:
-   - model `gpt-5.1-codex-mini`
-   - `model_reasoning_effort=low`
-   - `model_verbosity=low`
-   - `model_auto_compact_token_limit=30000`
-   - `agent.max_turns=12`
+4. The default Codex profile is balanced:
+   - model `gpt-5.3-codex`
+   - `model_reasoning_effort=medium`
+   - `model_verbosity=medium`
+   - `model_auto_compact_token_limit=50000`
+   - `agent.max_turns=16`
 5. The current unattended setup uses `danger-full-access` sandboxing for Codex, because git operations for branch sync, commit, and push require write access to `.git`.
 
 ## Required external setup
@@ -66,7 +66,7 @@ This repository now includes a starter `Symphony` contract for Linear-driven age
      - prefix each line with `export`; or
      - run `set -a; source .env.symphony; set +a`
    - Keep command values with spaces quoted, for example:
-     - `export SYMPHONY_CODEX_COMMAND='codex --dangerously-bypass-approvals-and-sandbox --model gpt-5.1-codex-mini --config shell_environment_policy.inherit=all --config model_reasoning_effort=low --config model_verbosity=low --config model_auto_compact_token_limit=30000 app-server'`
+     - `export SYMPHONY_CODEX_COMMAND='codex --dangerously-bypass-approvals-and-sandbox --model gpt-5.3-codex --config shell_environment_policy.inherit=all --config model_reasoning_effort=medium --config model_verbosity=medium --config model_auto_compact_token_limit=50000 app-server'`
    - Install repository dependencies in each workspace via `.codex/worktree_init.sh`.
    - For VPS deployment, use the systemd example in `ops/symphony.service`.
 
@@ -74,13 +74,13 @@ This repository now includes a starter `Symphony` contract for Linear-driven age
 
 There is no confirmed hard per-run token budget knob exposed in the current `codex app-server` schema.
 
-The current repository defaults reduce spend using supported settings instead:
+The current repository defaults aim for a balanced tradeoff between cost and execution quality:
 
-- cheaper coding model: `gpt-5.1-codex-mini`
-- lower reasoning depth: `model_reasoning_effort=low`
-- shorter answers: `model_verbosity=low`
-- earlier context compaction: `model_auto_compact_token_limit=30000`
-- fewer allowed turns per issue: `agent.max_turns=12`
+- stronger coding model: `gpt-5.3-codex`
+- medium reasoning depth: `model_reasoning_effort=medium`
+- medium answer length: `model_verbosity=medium`
+- context compaction: `model_auto_compact_token_limit=50000`
+- allowed turns per issue: `agent.max_turns=16`
 
 ## Sandbox mode
 

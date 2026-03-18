@@ -30,9 +30,9 @@ hooks:
   timeout_ms: 180000
 agent:
   max_concurrent_agents: 3
-  max_turns: 12
+  max_turns: 16
 codex:
-  command: ${SYMPHONY_CODEX_COMMAND:-codex --dangerously-bypass-approvals-and-sandbox --model gpt-5.1-codex-mini --config shell_environment_policy.inherit=all --config model_reasoning_effort=low --config model_verbosity=low --config model_auto_compact_token_limit=30000 app-server}
+  command: ${SYMPHONY_CODEX_COMMAND:-codex --dangerously-bypass-approvals-and-sandbox --model gpt-5.3-codex --config shell_environment_policy.inherit=all --config model_reasoning_effort=medium --config model_verbosity=medium --config model_auto_compact_token_limit=50000 app-server}
   approval_policy: never
   thread_sandbox: danger-full-access
   turn_sandbox_policy:
