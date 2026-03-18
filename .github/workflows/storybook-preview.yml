@@ -35,7 +35,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.STORYBOOK_SSH_USER }} "mkdir -p $STORYBOOK_PREVIEW_BASE/pr-${{ github.event.pull_request.number }}"
           rsync -avz --delete storybook-static/ ${{ secrets.STORYBOOK_SSH_USER }}:$STORYBOOK_PREVIEW_BASE/pr-${{ github.event.pull_request.number }}/
       - name: Comment PR with Storybook URL
-        continue-on-error: true
         uses: actions/github-script@v7
         env:
           STORYBOOK_URL_BASE: ${{ env.STORYBOOK_URL_BASE }}
