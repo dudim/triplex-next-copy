@@ -36,10 +36,13 @@ jobs:
       - name: Get deploy dir
         id: vars
         run: |
-          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
-            echo "preview_dir=main" >> $GITHUB_OUTPUT
+          branch_name="${GITHUB_REF##*/}"
+          if [[ "$branch_name" == "main" ]]; then
+            echo "preview_dir=main-copy" >> $GITHUB_OUTPUT
+          elif [[ "$branch_name" == release-* ]]; then
+            echo "preview_dir=${branch_name/release-/release-copy-}" >> $GITHUB_OUTPUT
           else
-            echo "preview_dir=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
+            echo "preview_dir=$branch_name" >> $GITHUB_OUTPUT
           fi
 
       - name: Deploy Storybook to server
