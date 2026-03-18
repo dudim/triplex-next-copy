@@ -122,29 +122,7 @@ export * from './components/Alert';
 
 Проект использует [Vitest](https://vitest.dev/) для unit-тестирования и [Testing Library](https://testing-library.com/docs/react-testing-library/intro/) для тестирования компонентов.
 
-Chromatic для визуального тестирования Storybook-компонентов.
-
-🧪 Как работает
-	•	При каждом пуше в ветки main или release-*, Chromatic запускает визуальные тесты.
-	•	Chromatic делает скриншоты всех stories, сравнивает с предыдущими, и показывает отличия (если есть).
-	•	✅ Если изменений нет — билд считается успешным.
-	•	🔍 Если есть изменения — нужен review и approval в интерфейсе Chromatic.
-
-⸻
-
-🔔 Уведомления
-	•	Chromatic отправляет нотификации в Telegram (через Webhook), если:
-	•	билд прошёл ✅
-	•	или есть изменения/ошибки ❗
-
-⸻
-
-🚀 Как одобрить изменения
-	1.	Перейди в свой Chromatic проект
-	2.	Найди последний билд в списке.
-	3.	Нажми Review changes
-	4.	Просмотри отличия → Approve (если всё ок)
-
+Для pull request обязательным GitHub check является сборка библиотеки (`Build library`).
 
 ### Как запустить тесты локально
 
@@ -153,7 +131,6 @@ npm run test-e2e         # Запуск e2e тестов
 npm run test-unit         # Запуск unit тестов
 npm run test-unit:watch   # Запуск unit тестов в режиме наблюдения
 npm run test-unit:coverage # Запуск unit тестов и генерация отчёта о покрытии
-npm run chromatic # Запуск скриншот тестов. В директории должен быть файл .env.local с ключем CHROMATIC_PROJECT_TOKEN=***
 ```
 
 ## Symphony

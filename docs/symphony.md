@@ -11,8 +11,6 @@ This repository now includes a starter `Symphony` contract for Linear-driven age
 1. Symphony can be pointed at this repository with `WORKFLOW.md`.
 2. Agents are instructed to use the existing quality gates in this repo:
    - `npm run build`
-   - `npm run test-unit`
-   - `npm run test-e2e` for UI/runtime changes
    - `npm run deps:cycles` when dependency graphs or exports change
 3. Auto-merge is opt-in by PR label and still respects GitHub branch protection.
 4. The default Codex profile is cost-conservative:

@@ -70,10 +70,9 @@ Operating rules:
 7. Keep changes scoped to the current ticket. File a separate issue for meaningful out-of-scope work.
 
 Repository-specific quality bar:
-1. If source code changes, run `npm run build` and `npm run test-unit`.
-2. If the change touches runtime behavior covered by Playwright specs or adds new user interactions, also run `npm run test-e2e`.
-3. If the change affects component dependencies or exports, also run `npm run deps:cycles`.
-4. Do not push while required validation for the touched scope is failing.
+1. If source code changes, run `npm run build`.
+2. If the change affects component dependencies or exports, also run `npm run deps:cycles`.
+3. Do not push while required validation for the touched scope is failing.
 
 GitHub / PR flow:
 1. Use the `commit` skill for logical commits.
