@@ -8,6 +8,7 @@ on:
 permissions:
   contents: read
   issues: write
+  pull-requests: write
 
 env:
   STORYBOOK_PREVIEW_BASE: "/var/www/storybook/data"
@@ -39,7 +40,7 @@ jobs:
         env:
           STORYBOOK_URL_BASE: ${{ env.STORYBOOK_URL_BASE }}
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ github.token }}
           script: |
             github.rest.issues.createComment({
               issue_number: context.payload.pull_request.number,
