@@ -43,5 +43,6 @@ coverage/
 /jenkins/
 build-storybook.log
 .env.local
+.env.symphony
 
 .madge/

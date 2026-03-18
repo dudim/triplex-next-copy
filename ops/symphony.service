@@ -1,0 +1,17 @@
+[Unit]
+Description=Symphony for triplex-next
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/srv/symphony/openai-symphony/elixir
+EnvironmentFile=/srv/symphony/triplex-next/.env.symphony
+ExecStart=/usr/local/bin/mise exec -- ./bin/symphony /srv/symphony/triplex-next/WORKFLOW.md
+Restart=always
+RestartSec=5
+User=symphony
+Group=symphony
+
+[Install]
+WantedBy=multi-user.target
