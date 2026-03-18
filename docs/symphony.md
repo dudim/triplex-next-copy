@@ -57,6 +57,8 @@ This repository now includes a starter `Symphony` contract for Linear-driven age
      - `LINEAR_API_KEY`
      - `SYMPHONY_SOURCE_REPO_URL`
      - `SYMPHONY_WORKSPACE_ROOT`
+   - For the local pilot, point `SYMPHONY_SOURCE_REPO_URL` at the local repository path, for example `/Users/dmitrii/Projects/triplex-next-copy`.
+   - For VPS or remote execution, switch `SYMPHONY_SOURCE_REPO_URL` to the GitHub repository URL, for example `git@github.com:dudim/triplex-next-copy.git`.
    - Optional:
       - `SYMPHONY_CODEX_COMMAND`
    - If you source `.env.symphony` in `zsh` or `bash`, quote command values with spaces, for example:
