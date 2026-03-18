@@ -21,6 +21,7 @@ This repository now includes a starter `Symphony` contract for Linear-driven age
    - `model_verbosity=low`
    - `model_auto_compact_token_limit=30000`
    - `agent.max_turns=12`
+5. The current unattended setup uses `danger-full-access` sandboxing for Codex, because git operations for branch sync, commit, and push require write access to `.git`.
 
 ## Required external setup
 
@@ -58,11 +59,16 @@ This repository now includes a starter `Symphony` contract for Linear-driven age
      - `SYMPHONY_SOURCE_REPO_URL`
      - `SYMPHONY_WORKSPACE_ROOT`
    - For the local pilot, point `SYMPHONY_SOURCE_REPO_URL` at the local repository path, for example `/Users/dmitrii/Projects/triplex-next-copy`.
+   - For the local pilot, use a writable local workspace root such as `/Users/dmitrii/.symphony/workspaces`.
    - For VPS or remote execution, switch `SYMPHONY_SOURCE_REPO_URL` to the GitHub repository URL, for example `git@github.com:dudim/triplex-next-copy.git`.
    - Optional:
       - `SYMPHONY_CODEX_COMMAND`
-   - If you source `.env.symphony` in `zsh` or `bash`, quote command values with spaces, for example:
-     - `SYMPHONY_CODEX_COMMAND='codex --model gpt-5.1-codex-mini --config shell_environment_policy.inherit=all --config model_reasoning_effort=low --config model_verbosity=low --config model_auto_compact_token_limit=30000 app-server'`
+   - If you use `.env.symphony`, variables must be exported so child processes can see them.
+   - If you source `.env.symphony` in `zsh` or `bash`, either:
+     - prefix each line with `export`; or
+     - run `set -a; source .env.symphony; set +a`
+   - Keep command values with spaces quoted, for example:
+     - `export SYMPHONY_CODEX_COMMAND='codex --dangerously-bypass-approvals-and-sandbox --model gpt-5.1-codex-mini --config shell_environment_policy.inherit=all --config model_reasoning_effort=low --config model_verbosity=low --config model_auto_compact_token_limit=30000 app-server'`
    - Install repository dependencies in each workspace via `.codex/worktree_init.sh`.
    - For VPS deployment, use the systemd example in `ops/symphony.service`.
 
@@ -77,6 +83,17 @@ The current repository defaults reduce spend using supported settings instead:
 - shorter answers: `model_verbosity=low`
 - earlier context compaction: `model_auto_compact_token_limit=30000`
 - fewer allowed turns per issue: `agent.max_turns=12`
+
+## Sandbox mode
+
+The current workflow uses `danger-full-access` for Codex threads and turns.
+
+Reason:
+
+- unattended git workflows need write access to `.git` for `fetch`, branch creation, commits, pushes, and merge metadata updates;
+- `workspace-write` proved insufficient in this environment because `.git` remained read-only to Codex.
+
+Use this mode only on a machine you control.
 
 If you want to make runs even cheaper, reduce one or more of:
 

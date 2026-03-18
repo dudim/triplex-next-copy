@@ -32,11 +32,11 @@ agent:
   max_concurrent_agents: 3
   max_turns: 12
 codex:
-  command: ${SYMPHONY_CODEX_COMMAND:-codex --model gpt-5.1-codex-mini --config shell_environment_policy.inherit=all --config model_reasoning_effort=low --config model_verbosity=low --config model_auto_compact_token_limit=30000 app-server}
+  command: ${SYMPHONY_CODEX_COMMAND:-codex --dangerously-bypass-approvals-and-sandbox --model gpt-5.1-codex-mini --config shell_environment_policy.inherit=all --config model_reasoning_effort=low --config model_verbosity=low --config model_auto_compact_token_limit=30000 app-server}
   approval_policy: never
-  thread_sandbox: workspace-write
+  thread_sandbox: danger-full-access
   turn_sandbox_policy:
-    type: workspaceWrite
+    type: dangerFullAccess
 ---
 You are working on Linear issue `{{ issue.identifier }}` for the `triplex-next` repository.
 
