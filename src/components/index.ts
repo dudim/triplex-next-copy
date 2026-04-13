@@ -73,7 +73,6 @@ export * from "./Confirm";
 export * from "./DesignTokens";
 export * from "./Divider";
 export * from "./ListMaster";
-export * from "./MonthYearField";
 export * from "./MultiselectField";
 export * from "./Suggest";
 export * from "./SwipeableArea";

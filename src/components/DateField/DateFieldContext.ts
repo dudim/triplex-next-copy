@@ -7,7 +7,7 @@ interface IDateFieldContext extends Pick<IDateFieldProps, "onChange"> {
     triggerChangeFromInput: () => void;
 }
 
-/** Контекст компонента MonthYearField. */
+/** Контекст компонента DateField. */
 export const DateFieldContext = React.createContext<IDateFieldContext>({
     inputFocusedRef: { current: null },
     onChange: () => {},
