@@ -22,6 +22,7 @@ export * from "./MobileView";
 export * from "./NumberField";
 export * from "./Radio";
 export * from "./Row";
+export * from "./MonthYearRange";
 export * from "./TabsExtended";
 export * from "./Tabs";
 export * from "./TabsLine";
